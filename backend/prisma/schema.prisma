@@ -1,12 +1,71 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
+}
+
+model concelho {
+  id          Int         @id @default(autoincrement())
+  nome        String      @unique(map: "uk_concelho_nome") @db.VarChar(100)
+  distrito_id Int
+  distrito    distrito    @relation(fields: [distrito_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_concelho_distrito")
+  indicador   indicador[]
+
+  @@index([distrito_id], map: "fk_concelho_distrito")
+}
+
+model distrito {
+  id       Int        @id @default(autoincrement())
+  nome     String     @unique(map: "uk_distrito_nome") @db.VarChar(100)
+  pais_id  Int
+  concelho concelho[]
+  pais     pais       @relation(fields: [pais_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_distrito_pais")
+
+  @@index([pais_id], map: "fk_distrito_pais")
+}
+
+model fase_da_lua {
+  id        Int         @id @default(autoincrement())
+  nome      String      @unique(map: "uk_fase_lua_nome") @db.VarChar(100)
+  indicador indicador[]
+}
+
+model indicador {
+  id           Int          @id @default(autoincrement())
+  data_utc     DateTime?    @db.DateTime(0)
+  valor        Float?       @db.Float
+  fase_lua_id  Int?
+  concelho_id  Int?
+  parametro_id Int?
+  concelho     concelho?    @relation(fields: [concelho_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_indicador_concelho")
+  fase_da_lua  fase_da_lua? @relation(fields: [fase_lua_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_indicador_fase_lua")
+  parametro    parametro?   @relation(fields: [parametro_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_indicador_parametro")
+
+  @@index([concelho_id], map: "fk_indicador_concelho")
+  @@index([fase_lua_id], map: "fk_indicador_fase_lua")
+  @@index([parametro_id], map: "fk_indicador_parametro")
+}
+
+model medida {
+  id        Int         @id @default(autoincrement())
+  unidade   String      @unique(map: "uk_medida_unidade") @db.VarChar(100)
+  parametro parametro[]
+}
+
+model pais {
+  id       Int        @id @default(autoincrement())
+  nome     String     @unique(map: "uk_pais_nome") @db.VarChar(100)
+  distrito distrito[]
+}
+
+model parametro {
+  id         Int         @id @default(autoincrement())
+  designacao String      @unique(map: "uk_parametro_designacao") @db.VarChar(100)
+  medida_id  Int
+  indicador  indicador[]
+  medida     medida      @relation(fields: [medida_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_parametro_medida")
+
+  @@index([medida_id], map: "fk_parametro_medida")
 }

@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* ═══════════════════════════════════════════
+   ROOT
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.au-wrap {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  color: #1a1a2e;
+}
+
+/* ═══════════════════════════════════════════
+   STICKY SECTION
+═══════════════════════════════════════════ */
+.au-section {
+  height: 400vh;
+  position: relative;
+}
+
+.au-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* ═══════════════════════════════════════════
+   MAP
+═══════════════════════════════════════════ */
+.au-map-clip {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.au-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════
+   VIGNETTE — subtil nas bordas
+═══════════════════════════════════════════ */
+.au-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 90% at center, transparent 55%, rgba(255,255,255,0.5) 100%),
+    linear-gradient(to bottom,
+      rgba(255,255,255,0.6) 0%,
+      transparent 12%,
+      transparent 82%,
+      rgba(255,255,255,0.85) 100%);
+  z-index: 10;
+}
+
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════ */
+.au-progress {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(0,0,0,0.08);
+  z-index: 30;
+}
+
+.au-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #e63946, #ff6b6b);
+  border-radius: 0 1px 1px 0;
+  transition: width 0.04s linear;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL HINT
+═══════════════════════════════════════════ */
+.au-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 20;
+  pointer-events: none;
+  color: rgba(26,26,46,0.4);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transition: opacity 0.5s ease;
+}
+
+.au-hint-mouse {
+  width: 22px;
+  height: 34px;
+  border: 1.5px solid rgba(26,26,46,0.3);
+  border-radius: 11px;
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+  animation: au-bounce 2s ease-in-out infinite;
+}
+
+.au-hint-wheel {
+  width: 2px;
+  height: 7px;
+  background: rgba(26,26,46,0.4);
+  border-radius: 2px;
+  animation: au-wheel 2s ease-in-out infinite;
+}
+
+@keyframes au-bounce {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(3px); }
+}
+@keyframes au-wheel {
+  0%   { opacity: 1; transform: translateY(0); }
+  50%  { opacity: 0.2; transform: translateY(4px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   CITY LABEL
+═══════════════════════════════════════════ */
+.au-city-label {
+  position: absolute;
+  bottom: 68px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 20;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.4s ease;
+}
+
+.au-city-name {
+  display: block;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #1a1a2e;
+  text-shadow: 0 2px 16px rgba(255,255,255,0.8);
+}
+
+.au-city-country {
+  display: block;
+  font-size: clamp(0.65rem, 1.5vw, 0.82rem);
+  font-weight: 500;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: rgba(26,26,46,0.7);
+  margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   TEXT PHASES — desktop: direita | mobile: baixo-centro
+═══════════════════════════════════════════ */
+.au-phases {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  /* Desktop: alinhar à direita */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 6vw;
+}
+
+.au-phase {
+  position: absolute;
+  max-width: 380px;
+  text-align: right;
+  right: 6vw;
+}
+
+.au-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #e63946;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(230,57,70,0.3);
+  padding-bottom: 5px;
+}
+
+.au-title {
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #1a1a2e;
+  margin-bottom: 12px;
+  text-shadow: 0 2px 12px rgba(255,255,255,0.7);
+}
+
+.au-desc {
+  font-size: clamp(0.82rem, 1.3vw, 0.92rem);
+  line-height: 1.7;
+  color: rgba(26,26,46,0.6);
+  font-weight: 300;
+}
+
+/* ═══════════════════════════════════════════
+   DETAILS SECTION
+═══════════════════════════════════════════ */
+.au-details {
+  background: #ffffff;
+  padding: 80px 6vw 100px;
+  border-top: 1px solid rgba(0,0,0,0.07);
+}
+
+.au-details-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #e63946;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.au-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.au-card {
+  background: #f7f8fc;
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: 14px;
+  padding: 32px 26px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.au-card:hover {
+  border-color: rgba(230,57,70,0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(230,57,70,0.08);
+}
+
+.au-card-icon {
+  font-size: 1.7rem;
+  margin-bottom: 16px;
+}
+
+.au-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+
+.au-card p {
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: rgba(26,26,46,0.55);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — iPhone 12 Pro base (390px)
+═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Fases: centradas no fundo do ecrã */
+  .au-phases {
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 0 90px;
+  }
+
+  .au-phase {
+    position: absolute;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: calc(100% - 48px);
+    max-width: 340px;
+    /* Override inline translateY — needs JS; kept via inline style */
+  }
+
+  .au-tag {
+    font-size: 0.6rem;
+  }
+
+  .au-title {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+
+  .au-desc {
+    font-size: 0.82rem;
+  }
+
+  /* City label no mobile */
+  .au-city-label {
+    bottom: auto;
+    top: 100px;
+    transform: translateX(-50%);
+  }
+
+  /* Hint menor */
+  .au-hint {
+    bottom: 24px;
+    font-size: 0.6rem;
+  }
+
+  /* Cards em coluna */
+  .au-grid {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  .au-details {
+    padding: 60px 24px 80px;
+  }
+
+  /* Marcador ligeiramente maior no mobile */
+  .au-marker-dot {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+@media (max-width: 430px) {
+  /* iPhone 12 Pro: 390px */
+  .au-phase {
+    width: calc(100% - 32px);
+  }
+}
